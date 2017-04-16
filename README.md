@@ -31,7 +31,7 @@ $ snakemake -r input/pranav_test1_allele1.hdf5 input/pranav_test2_allele1.hdf5
 The pipeline contains three modules:
 
 1. `modules/variant2input.snakemake`: takes a variant file and output a hdf5 file that is ready for being used by `keras` model.
-    - input: specifies at config.yaml`
+    - input: specifies at `config.yaml`
     - output: `input/{data}_allele1.hdf5` and `input/{data}_allele2.hdf5`
 2. `modules/input2score.snakemake`: takes the two outputs above and the model specified at `config.yaml`, output the predicted scores.
     - input: see above and model
