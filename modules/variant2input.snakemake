@@ -1,7 +1,4 @@
-subworkflow formatting:
-    workdir: 'formatted' # lambda wilcards: config['data'][wildcards.data]['workdir']
-    snakefile: 'modules/submodules/variant2input/_formatting_pranav.snakemake' # lambda wilcards: config['data'][wildcards.data]['snakemake']
-
+include: 'submodules/variant2input/_formatting.snakemake'
 '''
 Need some explanation when it works
 '''

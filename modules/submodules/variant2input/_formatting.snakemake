@@ -1,0 +1,9 @@
+include: 'formatting/*.snakemake'
+
+rule formatting:
+    input:
+        lambda wildcards: 'data/{config[data][wildcards.data][method]}/{data}.formatted'
+    output:
+        temp('data/{data}.formatted')
+    shell:
+        '''cp {input} {output}'''
