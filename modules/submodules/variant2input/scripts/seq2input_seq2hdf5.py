@@ -1,7 +1,11 @@
 import h5py
 import numpy as np
+import my_python
 
-def seq2hdf5(fasta, out, window, huge_array, encode):
+def seq2hdf5(fasta, out, window, encode):
+    cmd = '''cat {file} | wc -l'''.format(file=fasta)
+    length = my_python.mySubprocess(cmd, False)
+    huge_array = np.zeros((int(length), window, 4), np.bool_)
     counter = 0
     with open(fasta) as infile:
     	for line in infile:
@@ -24,7 +28,6 @@ def seq2hdf5(fasta, out, window, huge_array, encode):
     f.create_dataset('x', data=huge_array)
     f.close()
 
-huge_array = np.zeros((int(length), args.window, 4), np.bool_)
 encode = {'A': 0, 'T': 3, 'G': 1, 'C': 2}
-seq2hdf5(input.a1, output.a1, params.window, huge_array, encode)
-seq2hdf5(input.a2, output.a2, params.window, huge_array, encode)
+seq2hdf5(snakemake.input.a1, snakemake.output.a1, snakemake.params.window, encode)
+seq2hdf5(snakemake.input.a2, snakemake.output.a2, snakemake.params.window, encode)

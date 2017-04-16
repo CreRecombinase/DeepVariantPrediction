@@ -1,12 +1,11 @@
 data:
   pranav_test1:
     name: 'test/pranav_test1.txt'
-    method: 'pranav'
+    method: '_formatting_pranav.snakemake'
   pranav_test2:
     name: 'test/pranav_test2.txt'
-    method: 'pranav'
-method: '_formatting_pranav.snakemake'
-window_size: 1000 # Attention: this should match the window size of the model below
+    method: '_formatting_pranav.snakemake'
+window_size: 10 # Attention: this should match the window size of the model below
 model:
   name: 'path_to_model/model_name.hdf5'
   snakemake: 'path_to/snakemake'
@@ -18,7 +17,7 @@ label:
   group2:
     E129 : 194
     Noonan : 195
-genome_assembly: 'path_to/hg.19.fa'
+genome_assembly: '/project2/xinhe/yanyul/databases/hg19/hg19.fa'
 performance:
   mode1:
     script: 'path_to/performance_script1.py'

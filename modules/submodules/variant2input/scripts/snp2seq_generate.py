@@ -1,23 +1,23 @@
 # generate allele1.fa and allele2.fa
 
-allele1_o = open(output.a1, 'w')
-allele2_o = open(output.a2, 'w')
-extracted_fa = input
+allele1_o = open(snakemake.output.a1, 'w')
+allele2_o = open(snakemake.output.a2, 'w')
+extracted_fa = snakemake.input.a1
 
 # some intermediate dependencies
 reverse_dic = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
-if params.window % 2 == 0:
+if snakemake.params.window % 2 == 0:
 	even_flag = 0
-	start = params.window / 2 - 1
-	end = params.window / 2
+	start = snakemake.params.window / 2 - 1
+	end = snakemake.params.window / 2
 else:
-	start = (params.window - 1) / 2
+	start = (snakemake.params.window - 1) / 2
 	end = -start
 	even_flag = 1
-midpos = start
+midpos = int(start)
 # end
 
-with open(extracted_fa) as infile:
+with open(extracted_fa, 'r') as infile:
 	for line in infile:
 		line = line.strip().upper()
 		info = line.split('\t')

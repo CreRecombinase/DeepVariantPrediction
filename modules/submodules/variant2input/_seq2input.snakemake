@@ -7,5 +7,5 @@ rule seq2hdf5:
         a2='input/{data}_allele2.hdf5'
     params:
         window=config['window_size']
-    shell:
-        'scripts/variant2input_seq2input_seq2hdf5.py'
+    script:
+        'scripts/seq2input_seq2hdf5.py'
