@@ -1,6 +1,6 @@
 rule remove_header:
     input:
-        '{data}'
+        lambda wildcards: config['data'][wildcards.data]['name']
     output:
         temp('data/{data}_noheader')
     shell:

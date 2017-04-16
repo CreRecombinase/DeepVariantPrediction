@@ -1,10 +1,10 @@
 data:
-  data1:
-    name: 'path_to_raw_data/test1.bed'
-    snakemake: 'path_to/formating1.snakemake'
-  data2:
-    name: 'path_to_raw_data/test2.bed'
-    snakemake: 'path_to/formatting2.snakemake'
+  pranav_test1:
+    name: 'test/pranav_test1.txt'
+    snakemake: 'submodules/variant2input/_formatting_pranav.snakemake'
+  pranav_test2:
+    name: 'test/pranav_test2.txt'
+    snakemake: 'submodules/variant2input/_formatting_pranav.snakemake'
 window_size: 1000 # Attention: this should match the window size of the model below
 model:
   name: 'path_to_model/model_name.hdf5'

@@ -1,9 +1,12 @@
-include 'modules/config[data][{wildcards.data}][snakemake]'
+#include:
+#    config['data'][{wildcards.data}]['snakemake']
+# include: "{config[data][pranav_test1][snakemake]}"# 'submodules/variant2input/_formatting_pranav.snakemake'
+include: lambda wildcards: config["data"][wildcards.data]['snakemake']
 '''
 Here we make the formatting step as a sub snakemake module, because itself is easy to be
 implemented as a workflow but different input type may need different workflow.
 Therefore, to make it a sub snakemake module makes it flexible for various input types.
 '''
 
-include 'modules/submodules/variant2input/_snp2seq.snakemake'
-include 'modules/submodules/variant2input/_seq2input.snakemake'
+include: 'submodules/variant2input/_snp2seq.snakemake'
+include: 'submodules/variant2input/_seq2input.snakemake'
