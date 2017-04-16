@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, 'scripts')
 import my_python
 # extract sequence from genome
 cmd = '''bedtools getfasta -fi {genome} -bed {input} -fo {out} \

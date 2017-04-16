@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, 'scripts')
 import my_python
 if snakemake.params.window % 2 == 0:
 	even_flag = 0

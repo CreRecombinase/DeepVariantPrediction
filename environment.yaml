@@ -8,3 +8,7 @@ dependencies:
   - python=3.5.1
   - snakemake=3.11.0
   - pyyaml=3.11
+  - bedtools=2.25.0
+  - pip
+  - pip:
+    - h5py
