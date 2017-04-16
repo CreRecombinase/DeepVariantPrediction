@@ -25,3 +25,9 @@ To run through the pipeline:
 ```
 $ snakemake -r input/pranav_test1_allele1.hdf5 input/pranav_test2_allele1.hdf5
 ```
+
+# Structure of the pipeline
+
+The pipeline contains three modules:
+
+1. `
