@@ -1,0 +1,29 @@
+data:
+  data1:
+    name: 'path_to_raw_data/test1.bed'
+    script: 'path_to/formating1.py'
+  data2:
+    name: 'path_to_raw_data/test2.bed'
+    script: 'path_to/formatting2.py'
+window_size: 1000 # Attention: this should match the window size of the model below
+model:
+  name: 'path_to_model/model_name.hdf5'
+  snakemake: 'path_to/snakemake'
+  workdir: 'path_to/work_dir'
+label:
+  group1:
+    E081 : 192
+    E082 : 193
+  group2:
+    E129 : 194
+    Noonan : 195
+genome_assembly: 'path_to/hg.19.fa'
+performance:
+  mode1:
+    script: 'path_to/performance_script1.py'
+    params: 'some other input here'
+  mode2:
+    script: 'path_to/performance_script1.py'
+    params:
+      annotation: 'path_to/annotation.bed'
+      thresold: 1e-5

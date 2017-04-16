@@ -1,0 +1,16 @@
+{
+    "__default__" :
+    {
+        "time" : "00:15:00",
+        "n" : 1,
+        "partition" : "broadwl"
+    },
+    "prediction" :
+    {
+        "time" : "00:20:00",
+        "partition" : "gpu2",
+        "mem" : "50G",
+        "gres" : "gpu:1"
+    }
+}
+/*not sure how to enable cluster mode only on prediction rule*/

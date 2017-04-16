@@ -1,0 +1,25 @@
+# Here we make training step as a subworkflow of prediction step
+# The main reason is that the model is well defined by the training data and the
+# model architecture with training details so it is werid to put the training
+# information with this prediction pipeline together. Here the main object should
+# be input variant but not model
+
+subworkflow train_model:
+    workdir: config['model']['workdir']
+    snakefile: config['model']['snakemake']
+
+rule prediction:
+'''
+This rule takes a pair of HDF5 file as input and make the prediction (take the mean
+of two directions)
+'''
+    input:
+        model=train_model(config['model']['name']),
+        x1='input/{data}_allele1.hdf5'
+        x2='input/{data}_allele2.hdf5'
+    output:
+        'score/{config[model][name]}/{data}_allele1.hdf5',
+        'score/{config[model][name]}/{data}_allele2.hdf5'
+    shell:
+        'python scripts/prediction.py --model {input.model} --data {input.x1}'
+        'python scripts/prediction.py --model {input.model} --data {input.x2}'
