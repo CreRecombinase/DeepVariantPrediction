@@ -1,6 +1,6 @@
 rule expand_bed:
     input:
-        'data/{data}.formatted'
+        train_model('data/{data}.formatted')
     output:
         temp('data/{data}.formatted.expended')
     params:

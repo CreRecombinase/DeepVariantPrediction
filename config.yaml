@@ -2,9 +2,11 @@ data:
   pranav_test1:
     name: 'test/pranav_test1.txt'
     snakemake: 'submodules/variant2input/_formatting_pranav.snakemake'
+    workdir: 'formatted/'
   pranav_test2:
     name: 'test/pranav_test2.txt'
     snakemake: 'submodules/variant2input/_formatting_pranav.snakemake'
+    workdir: 'formatted/'
 window_size: 1000 # Attention: this should match the window size of the model below
 model:
   name: 'path_to_model/model_name.hdf5'
