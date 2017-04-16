@@ -1,33 +1,9 @@
-rule formatting:
-    input:
-        'data/{data}'
-    output:
-        temp('data/{data}.formatted')
-    shell:
-        'python {config[data][{data}][script]} {input} > {output}'
-rule snp2seq:
-    input:
-        'data/{data}.formatted'
-    output:
-        temp('data/{data}.formatted.expended'),
-        temp('data/{data}.formatted.expended.fa'),
-        temp('data/{data}_allele1.fa'),
-        temp('data/{data}_allele2.fa')
-    params:
-        assembly=config['genome_assembly'],
-        window_size=config['window_size']
-    shell:
-        'python snp2seq.py --window {params.window} --assembly {params.assembly} {input}'
+include 'modules/config[data][{wildcards.data}][snakemake]'
+'''
+Here we make the formatting step as a sub snakemake module, because itself is easy to be
+implemented as a workflow but different input type may need different workflow.
+Therefore, to make it a sub snakemake module makes it flexible for various input types.
+'''
 
-rule seq2input:
-    input:
-        a1='data/{data}_allele1.fa',
-        a2='data/{data}_allele2.fa',
-    output:
-        'input/{data}_allele1.hdf5'
-        'input/{data}_allele2.hdf5'
-    params:
-        window_size==config['window_size']
-    shell:
-        'python seq2input.py --window {params.window} {input.a1}'
-        'python seq2input.py --window {params.window} {input.a2}'
+include 'modules/submodules/variant2input/_snp2seq.snakemake'
+include 'modules/submodules/variant2input/_seq2input.snakemake'

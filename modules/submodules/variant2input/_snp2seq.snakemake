@@ -1,0 +1,30 @@
+rule expand_bed:
+    input:
+        'data/{data}.formatted'
+    output:
+        temp('data/{data}.formatted.expended')
+    params:
+        window=config['window_size']
+    script:
+        'scripts/variant2input_snp2seq_expand.py'
+
+rule extract_fasta:
+    input:
+        'data/{data}.formatted.expended'
+    output:
+        temp('data/{data}.formatted.expended.fa')
+    params:
+        assembly=config['genome_assembly']
+    script:
+        'scripts/variant2input_snp2seq_extract.py'
+
+rule generate_allele1_allele2:
+    input:
+        'data/{data}.formatted.expended.fa'
+    output:
+        a1=temp('data/{data}_allele1.fa'),
+        a2=temp('data/{data}_allele2.fa')
+    params:
+        window=config['window_size']
+    script:
+        'scripts/variant2input_snp2seq_generate.py'

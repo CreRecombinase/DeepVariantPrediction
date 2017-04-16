@@ -1,0 +1,25 @@
+rule remove_header:
+    input:
+        '{data}'
+    output:
+        temp('data/{data}_noheader')
+    shell:
+        '''echo "$(tail -n +2 {input})" > {output}'''
+
+rule remove_quotes:
+    input:
+        'data/{data}_noheader'
+    output:
+        temp('data/{data}_noquotes')
+    shell:
+        '''cat {input} | sed 's/\"//g' > {output}'''
+
+rule generate_output:
+    input:
+        'data/{data}_noquotes'
+    output:
+        temp('data/{data}.formatted')
+    shell:
+        '''cat {input} | \
+awk -F"\\t" '{{print "chr"$2"\\t"$3"\\t"$3+1"\\t"NR":"$5":"$6":"$4"\\t"$1"\\t"$7}} \
+> {output}'''
