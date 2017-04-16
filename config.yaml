@@ -5,6 +5,7 @@ data:
   pranav_test2:
     name: 'test/pranav_test2.txt'
     method: 'pranav'
+method: '_formatting_pranav.snakemake'
 window_size: 1000 # Attention: this should match the window size of the model below
 model:
   name: 'path_to_model/model_name.hdf5'

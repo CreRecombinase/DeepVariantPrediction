@@ -2,23 +2,23 @@ rule remove_header:
     input:
         lambda wildcards: config['data'][wildcards.data]['name']
     output:
-        temp('data/pranav/{data}_noheader')
+        temp('data/{data}_noheader')
     shell:
         '''echo "$(tail -n +2 {input})" > {output}'''
 
 rule remove_quotes:
     input:
-        'data/pranav/{data}_noheader'
+        'data/{data}_noheader'
     output:
-        temp('data/pranav/{data}_noquotes')
+        temp('data/{data}_noquotes')
     shell:
         '''cat {input} | sed 's/\"//g' > {output}'''
 
 rule generate_output:
     input:
-        'data/pranav/{data}_noquotes'
+        'data/{data}_noquotes'
     output:
-        temp('data/pranav/{data}.formatted')
+        temp('data/{data}.formatted')
     shell:
         '''cat {input} | \
 awk -F"\\t" '{{print "chr"$2"\\t"$3"\\t"$3+1"\\t"NR":"$5":"$6":"$4"\\t"$1"\\t"$7}} \

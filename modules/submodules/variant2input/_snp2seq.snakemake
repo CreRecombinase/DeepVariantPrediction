@@ -1,6 +1,6 @@
 rule expand_bed:
     input:
-        formatting('data/{data}.formatted')
+        'data/{data}.formatted'
     output:
         temp('data/{data}.formatted.expended')
     params:

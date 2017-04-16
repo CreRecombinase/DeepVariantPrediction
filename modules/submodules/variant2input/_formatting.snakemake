@@ -1,9 +1,15 @@
-include: 'formatting/*.snakemake'
+include: 
+    '''formatting/{snakemake}'''.format(snakemake=config['method'])
 
-rule formatting:
+
+
+
+'''formatting/_formatting_pranav.snakemake'''
+'''rule formatting:
     input:
-        lambda wildcards: 'data/{config[data][wildcards.data][method]}/{data}.formatted'
+        '''data/{dir}/{data}.formatted'''.format(dir=config['method'], data='{data}')
     output:
         temp('data/{data}.formatted')
     shell:
-        '''cp {input} {output}'''
+        '''cp {input} {output}''',
+'''
