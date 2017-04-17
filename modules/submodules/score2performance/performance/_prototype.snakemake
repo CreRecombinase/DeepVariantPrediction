@@ -1,0 +1,10 @@
+rule performance:
+    input:
+        lambda wildcards: 'score/{name}/{group}/{data}_result.feather'.format(name=config['model']['name'], data=wildcards.data, group=wildcards.group)
+    output:
+        'performance/{name}/{group}/method_name/{data}_report.html'
+    params:
+        lambda wildcards: config['performance']['method_name']['params']
+    shell:
+        'Run some scripts here'
+        'To use shell is recommended but use script/run mode is still acceptable'

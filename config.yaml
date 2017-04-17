@@ -20,10 +20,10 @@ label:
 genome_assembly: '/project2/xinhe/yanyul/databases/hg19/hg19.fa'
 performance:
   mode1:
-    script: 'path_to/performance_script1.py'
+    method: 'path_to/performance_script1.py'
     params: 'some other input here'
   mode2:
-    script: 'path_to/performance_script1.py'
+    method: 'path_to/performance_script1.py'
     params:
       annotation: 'path_to/annotation.bed'
       thresold: 1e-5

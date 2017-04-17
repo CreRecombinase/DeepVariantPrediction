@@ -15,16 +15,8 @@ rule score2feather:
         --label_num {params.label_num} --label_name {params.label_name} \
         --out {output}'''
 
-rule performance:
-# This rule takes the labels of interest extracted above and run through a script to
+for performance_snkmk in config['performance']:
+    include: 'submodules/score2performance/performance/{snkmk}'.format(snkmk=config['performance'][performance_snkmk]['method'])
+# This submodule takes the labels of interest extracted above and run through a script to
 # measure its performance and generate an html report (the report should be as light
 # and informative as possible without too much data).
-    input:
-        lambda wildcards: 'score/{name}/{group}/{data}_result.feather'.format(name=config['model']['name'], data=wildcards.data, group=wildcards.group)
-    output:
-        'performance/{name}/{group}/{method}/{data}_report.html'
-    params:
-        lambda wildcards: config['performance'][wildcards.method]['params']
-    shell:
-        lambda wildcards: '''{script} --params {params} \
-        --input {input} --output {output}'''.format(script=config['performance'][wildcards.method]['script'])
