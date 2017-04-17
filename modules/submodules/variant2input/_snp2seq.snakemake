@@ -13,9 +13,11 @@ rule report_bed:
         a1='data/{data}.formatted'
     output:
         o1='data/{data}.report.html'
-        o2=temp('data/{data}.checker.txt')
+        o2=temp('data/{data}.checker.bed'),
+        o3=temp('data/{data}.checker.bed.temp'),
     params:
-        assembly=config['genome_assembly']
+        assembly=config['genome_assembly'],
+        formatting=config['data']['{data}']['method']
     script:
         'scripts/snp2seq_report.py'
 

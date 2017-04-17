@@ -33,7 +33,7 @@ $ snakemake -r score/keras_deepsea_copy/pranav_test1_allele1.hdf5 score/keras_de
 
 You will get:
 ```
-$ h5dump -A -H score/keras_deepsea_copy/pranav_test1_allele1.hdf5 score/keras_deepsea_copy/pranav_test1_allele2.hdf5 
+$ h5dump -A -H score/keras_deepsea_copy/pranav_test1_allele1.hdf5 score/keras_deepsea_copy/pranav_test1_allele2.hdf5
 HDF5 "score/keras_deepsea_copy/pranav_test1_allele1.hdf5" {
 GROUP "/" {
    DATASET "y_pred" {
@@ -76,3 +76,4 @@ The pipeline contains three modules:
 # Attention
 
 1. Now we only implemented a very ugly "do nothing" train model sub workflow at `modules/submodules/input2score/_train_model_do_nothing.snakemake`. It takes a pretrained keras model and copy it as `{model}_copy.hdf5`.
+2. BED.formatted requirement (strand)
