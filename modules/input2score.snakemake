@@ -25,7 +25,7 @@ of two directions)
 
 rule prediction_allele2:
     input:
-        model=train_model(config['model']['name']),
+        model=train_model('{config[model][name]}.hdf5'),
         x2='input/{data}_allele2.hdf5'
     output:
         o2='score/{config[model][name]}/{data}_allele2.hdf5'
