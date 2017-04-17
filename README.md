@@ -52,6 +52,11 @@ GROUP "/" {
 }
 ```
 
+To generate a report file for formatting step:
+```
+$ snakemake data/pranav_test2.report.html
+```
+
 # Structure of the pipeline
 
 The pipeline contains three modules:
@@ -76,4 +81,16 @@ The pipeline contains three modules:
 # Attention
 
 1. Now we only implemented a very ugly "do nothing" train model sub workflow at `modules/submodules/input2score/_train_model_do_nothing.snakemake`. It takes a pretrained keras model and copy it as `{model}_copy.hdf5`.
-2. BED.formatted requirement (strand)
+2. For format of input ready for `_snp2seq.snakemake` is:
+```
+chr1	234713510	234713511	1:G:A:+	rs6658741	Alzheimer's
+chr1	234726011	234726012	2:A:C:-	rs744487	Alzheimer's
+chr1	234726100	234726101	3:T:C:+	rs10910470	Alzheimer's
+chr1	234726355	234726356	4:C:T:+	rs11581667	Alzheimer's
+chr1	234740879	234740880	5:C:T:-	rs1329125	Alzheimer's
+chr1	234763144	234763145	6:T:C:+	rs7536996	Alzheimer's
+chr1	234763264	234763265	7:A:G:+	rs7541554	Alzheimer's
+chr1	234765255	234765256	8:G:A:+	rs533483	Alzheimer's
+chr1	234765415	234765416	9:T:A:+	rs645181	Alzheimer's
+```
+, where the fourth column should be ID:Allele1:Allele2:strand and the further columns are optional. Note that the strand information is not needed and the pipeline assumes that the allele information is relative to the reference genome assembly as you set in `config.yaml`. As a validity checker of formatting step, it generate a report `data/[data].report.html` (see an example at the repo).
