@@ -93,4 +93,4 @@ chr1	234763264	234763265	7:A:G:+	rs7541554	Alzheimer's
 chr1	234765255	234765256	8:G:A:+	rs533483	Alzheimer's
 chr1	234765415	234765416	9:T:A:+	rs645181	Alzheimer's
 ```
-, where the fourth column should be ID:Allele1:Allele2:strand and the further columns are optional. Note that the strand information is not needed and the pipeline assumes that the allele information is relative to the reference genome assembly as you set in `config.yaml`. As a validity checker of formatting step, it generate a report `data/[data].report.html` (see an example at the repo).
+, where the fourth column should be `ID:Allele1:Allele2:strand` and the further columns are optional. Note that the strand information is not needed and the pipeline assumes that the allele information is relative to the reference genome assembly as you set in `config.yaml`. As a validity checker of formatting step, it generate a report `data/[data].report.html` (see an example at the repo).
