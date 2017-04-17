@@ -20,7 +20,7 @@ args = parser.parse_args()
 
 import h5py
 import numpy as np
-import pandas as import pd
+import pandas as pd
 import sys
 if 'scripts' not in sys.path:
     sys.path.insert(0, 'scripts')
