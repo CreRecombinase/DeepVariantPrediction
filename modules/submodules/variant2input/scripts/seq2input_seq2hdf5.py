@@ -1,7 +1,8 @@
 import h5py
 import numpy as np
 import sys
-sys.path.insert(0, 'scripts')
+if 'scripts' not in sys.path:
+    sys.path.insert(0, 'scripts')
 import my_python
 
 def seq2hdf5(fasta, out, window, encode):
