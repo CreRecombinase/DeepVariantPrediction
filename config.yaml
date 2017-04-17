@@ -7,7 +7,7 @@ data:
     method: '_formatting_pranav.snakemake'
 window_size: 1000 # Attention: this should match the window size of the model below
 model:
-  name: 'keras_deepsea'
+  name: 'keras_deepsea_copy'
   snakemake: 'modules/submodules/input2score/_train_model_do_nothing.snakemake'
   workdir: '../../yanyu/DeepSEA/debug'
 label:

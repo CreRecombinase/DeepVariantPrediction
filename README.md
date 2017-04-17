@@ -21,9 +21,35 @@ To see the schedule:
 $ snakemake -np input/pranav_test1_allele1.hdf5 input/pranav_test2_allele1.hdf5
 ```
 
-To run through the pipeline:
+To run through the variant2input step:
 ```
 $ snakemake -r input/pranav_test1_allele1.hdf5 input/pranav_test2_allele1.hdf5
+```
+
+To run through both variant2input and input2score steps:
+```
+$ snakemake -r score/keras_deepsea_copy/pranav_test1_allele1.hdf5 score/keras_deepsea_copy/pranav_test1_allele2.hdf5
+```
+
+You will get:
+```
+$ h5dump -A -H score/keras_deepsea_copy/pranav_test1_allele1.hdf5 score/keras_deepsea_copy/pranav_test1_allele2.hdf5 
+HDF5 "score/keras_deepsea_copy/pranav_test1_allele1.hdf5" {
+GROUP "/" {
+   DATASET "y_pred" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 9, 919 ) / ( 9, 919 ) }
+   }
+}
+}
+HDF5 "score/keras_deepsea_copy/pranav_test1_allele2.hdf5" {
+GROUP "/" {
+   DATASET "y_pred" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 9, 919 ) / ( 9, 919 ) }
+   }
+}
+}
 ```
 
 # Structure of the pipeline
@@ -43,5 +69,10 @@ The pipeline contains three modules:
 # TODO
 
 1. Add more formatting method at `modules/submodules/variant2input/formatting`. Now only Pranav data format has been implemented (from GWAS study, see format at `test/`).
-2. Debug `modules/input2score.snakemake`
+2. ~Debug `modules/input2score.snakemake`~
 3. Debug `modules/score2performance.snakemake` first part and implement at least one performance report script
+4. Add training snakemake script
+
+# Attention
+
+1. Now we only implemented a very ugly "do nothing" train model sub workflow at `modules/submodules/input2score/_train_model_do_nothing.snakemake`. It takes a pretrained keras model and copy it as `{model}_copy.hdf5`.
