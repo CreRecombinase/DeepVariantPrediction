@@ -4,7 +4,7 @@ rule score2rds:
     input:
         data_a1='score/{config[model]}/{data}_allele1.hdf5',
         data_a2='score/{config[model]}/{data}_allele2.hdf5',
-        label_group='{config[label][{group}]}'
+        label_group='-'.join
     output:
         'score/[model]/{group}/result.rds'
     shell:
