@@ -31,9 +31,9 @@ with open(extracted_fa, 'r') as infile:
 		allel2_seq = info[1][:midpos] + allele2 + info[1][midpos + 1:]
 
 		## write allele1
-		allele1_o.write('\t'.join([info[0], allel1_seq, check1]) + '\n')
+		allele1_o.write('\t'.join([info[0], allel1_seq]) + '\n')
 		## write allele2
-		allele2_o.write('\t'.join([info[0], allel2_seq, check2]) + '\n')
+		allele2_o.write('\t'.join([info[0], allel2_seq]) + '\n')
 
 allele1_o.close()
 allele2_o.close()

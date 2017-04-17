@@ -17,6 +17,7 @@ def printHDF5(string):
 def myOsSystem(cmd, debug):
 	if debug is False:
 		os.system(cmd)
+		# print(cmd)
 	else:
 		print(cmd)
 def mySubprocess(cmd, debug):

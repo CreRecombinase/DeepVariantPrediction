@@ -12,12 +12,12 @@ rule report_bed:
     input:
         a1='data/{data}.formatted'
     output:
-        o1='data/{data}.report.html'
+        o1='data/{data}.report.html',
         o2=temp('data/{data}.checker.bed'),
         o3=temp('data/{data}.checker.bed.temp'),
     params:
         assembly=config['genome_assembly'],
-        formatting=config['data']['{data}']['method']
+        formatting=lambda wildcards: config['data'][wildcards.data]['method']
     script:
         'scripts/snp2seq_report.py'
 
