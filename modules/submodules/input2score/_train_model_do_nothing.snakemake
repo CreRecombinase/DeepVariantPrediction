@@ -1,7 +1,10 @@
 rule all:
     input:
-        {model}
+        '{model}.hdf5'
+rule donothing:
+    input:
+        '{model}.hdf5'
     output:
-        {model}
+        '{model}_copy.hdf5'
     shell:
-        ''
+        'cp {input} {output}'

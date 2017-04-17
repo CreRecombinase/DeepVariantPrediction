@@ -9,27 +9,26 @@ subworkflow train_model:
     snakefile: config['model']['snakemake']
 
 rule prediction_allele1:
-'''
-This rule takes a pair of HDF5 file as input and make the prediction (take the mean
-of two directions)
-'''
+#This rule takes a pair of HDF5 file as input and make the prediction (take the mean
+#of two directions)
     input:
-        model=train_model(config['model']['name']),
+        model=train_model('{name}_copy.hdf5'.format(name=config['model']['name'])),
         x1='input/{data}_allele1.hdf5'
     output:
-        o1='score/{config[model][name]}/{data}_allele1.hdf5',
-    logs:
-        a1='logs/{config[model][name]}/{data}_allele1.log',
+        o1='score/{name}/{data}_allele1.hdf5'.format(name=config['model']['name'], data='{data}')
+    log:
+        a1='logs/{name}/{data}_allele1.log'.format(name=config['model']['name'], data='{data}')
     shell:
-        'python input2score/scripts/prediction.py --model {input.model} --data {input.x1} --out {output.o1} > {logs.a1}'
+        'python scripts/prediction.py --model {input.model} --data {input.x1} --out {output.o1} > {log.a1}'
 
 rule prediction_allele2:
     input:
-        model=train_model('{config[model][name]}.hdf5'),
+        model=train_model('{name}_copy.hdf5'.format(name=config['model']['name'])),
         x2='input/{data}_allele2.hdf5'
     output:
-        o2='score/{config[model][name]}/{data}_allele2.hdf5'
-    logs:
-        a2='logs/{config[model][name]}/{data}_allele2.log'
+        o2='score/{name}/{data}_allele2.hdf5'.format(name=config['model']['name'], data='{data}')
+    log:
+        a2='logs/{name}/{data}_allele2.log'.format(name=config['model']['name'], data='{data}')
     shell:
-        'python input2score/scripts/prediction.py --model {input.model} --data {input.x2} --out {output.o2} > {logs.a2}'
+        'python scripts/prediction.py --model {input.model} --data {input.x2} --out {output.o2} > {log.a2}'
+

@@ -1,8 +1,10 @@
 configfile:
     'config.yaml'
 include:
-    'modules/variant2input.snakemake',
-    'modules/input2score.snakemake',
+    'modules/variant2input.snakemake'
+include:
+    'modules/input2score.snakemake'
+include:
     'modules/score2performance.snakemake'
 
 rule all:

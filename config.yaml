@@ -5,11 +5,11 @@ data:
   pranav_test2:
     name: 'test/pranav_test2.txt'
     method: '_formatting_pranav.snakemake'
-window_size: 10 # Attention: this should match the window size of the model below
+window_size: 1000 # Attention: this should match the window size of the model below
 model:
-  name: 'path_to_model/model_name.hdf5'
+  name: 'keras_deepsea'
   snakemake: 'modules/submodules/input2score/_train_model_do_nothing.snakemake'
-  workdir: 'path_to/work_dir'
+  workdir: '../../yanyu/DeepSEA/debug'
 label:
   group1:
     E081 : 192
