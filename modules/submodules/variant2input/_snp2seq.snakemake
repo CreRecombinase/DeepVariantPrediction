@@ -8,15 +8,29 @@ rule expand_bed:
     script:
         'scripts/snp2seq_expand.py'
 
+rule report_bed_pre1:
+    input:
+        a='data/{data}.formatted'
+    output:
+        o=temp('data/{data}.checker.bed.temp')
+    params:
+        assembly=config['genome_assembly']
+    shell:
+        '''bedtools getfasta -fi {params.assembly} -bed {input.a} -fo {output.o} \
+        -name -tab'''
+rule report_bed2_pre2:
+    input:
+        a='data/{data}.checker.bed.temp'
+    output:
+        o=temp('data/{data}.checker.bed')
+    script:
+        'scripts/snp2seq_report_pre2.py'
 rule report_bed:
     input:
-        a1='data/{data}.formatted'
+        a='data/{data}.checker.bed'
     output:
-        o1='data/{data}.report.html',
-        o2=temp('data/{data}.checker.bed'),
-        o3=temp('data/{data}.checker.bed.temp'),
+        o='data/{data}.report.html',
     params:
-        assembly=config['genome_assembly'],
         formatting=lambda wildcards: config['data'][wildcards.data]['method']
     script:
         'scripts/snp2seq_report.py'
