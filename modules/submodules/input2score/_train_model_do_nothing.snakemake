@@ -1,0 +1,7 @@
+rule all:
+    input:
+        {model}
+    output:
+        {model}
+    shell:
+        ''
