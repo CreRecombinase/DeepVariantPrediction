@@ -1,10 +1,18 @@
-rule seq2hdf5:
+rule seq2hdf5_allele1:
     input:
-        a1='data/{data}_allele1.fa',
-        a2='data/{data}_allele2.fa'
+        a1='data/{data}_allele1.fa'
     output:
-        a1='input/{data}_allele1.hdf5',
-        a2='input/{data}_allele2.hdf5'
+        a1='input/{data}_allele1.hdf5'
+    params:
+        window=config['window_size']
+    script:
+        'scripts/seq2input_seq2hdf5.py'
+
+rule seq2hdf5_allele2:
+    input:
+        a1='data/{data}_allele2.fa'
+    output:
+        a1='input/{data}_allele2.hdf5'
     params:
         window=config['window_size']
     script:

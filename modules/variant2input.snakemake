@@ -1,9 +1,9 @@
 for i in config['data']:
     include: '''submodules/variant2input/formatting/{snkmk}'''.format(snkmk=config['data'][i]['method'])
-'''
-Different data may need different formatting method, here you need to implement new formatting snakemake script at
-modules/submodules/variant2input/formatting/ and at config.yaml you need to specify the method used for each input data
-'''
+
+# Different data may need different formatting method, here you need to implement new formatting snakemake script at
+# modules/submodules/variant2input/formatting/ and at config.yaml you need to specify the method used for each input data
+
 
 include: 'submodules/variant2input/_snp2seq.snakemake'
 include: 'submodules/variant2input/_seq2input.snakemake'

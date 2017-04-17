@@ -8,6 +8,17 @@ rule expand_bed:
     script:
         'scripts/snp2seq_expand.py'
 
+rule report_bed:
+    input:
+        a1='data/{data}.formatted'
+    output:
+        o1='data/{data}.report.html'
+        o2=temp('data/{data}.checker.txt')
+    params:
+        assembly=config['genome_assembly']
+    script:
+        'scripts/snp2seq_report.py'
+
 rule extract_fasta:
     input:
         a1='data/{data}.formatted.expended'

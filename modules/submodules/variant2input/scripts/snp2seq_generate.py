@@ -26,15 +26,10 @@ with open(extracted_fa, 'r') as infile:
 		strand = name_chunk[3]
 		allele1 = name_chunk[1]
 		allele2 = name_chunk[2]
-		if strand == '-':
-			mid = info[1][midpos + even_flag * 2]
-			allel1_seq = info[1][:midpos + even_flag * 2] + allele1 + info[1][midpos + even_flag * 2 + 1:]
-			allel2_seq = info[1][:midpos + even_flag * 2] + allele2 + info[1][midpos + even_flag * 2 + 1:]
-			# print(mid)
-		else:
-			mid = info[1][midpos]
-			allel1_seq = info[1][:midpos] + allele1 + info[1][midpos + 1:]
-			allel2_seq = info[1][:midpos] + allele2 + info[1][midpos + 1:]
+
+		mid = info[1][midpos]
+		allel1_seq = info[1][:midpos] + allele1 + info[1][midpos + 1:]
+		allel2_seq = info[1][:midpos] + allele2 + info[1][midpos + 1:]
 
 		## generate checking info for allele1
 		if mid == allele1:

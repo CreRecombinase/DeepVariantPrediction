@@ -33,4 +33,3 @@ def seq2hdf5(fasta, out, window, encode):
 
 encode = {'A': 0, 'T': 3, 'G': 1, 'C': 2}
 seq2hdf5(snakemake.input.a1, snakemake.output.a1, snakemake.params.window, encode)
-seq2hdf5(snakemake.input.a2, snakemake.output.a2, snakemake.params.window, encode)
