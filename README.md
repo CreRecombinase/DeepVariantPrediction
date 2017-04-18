@@ -57,6 +57,12 @@ To generate a report file for formatting step:
 $ snakemake data/pranav_test2.report.html
 ```
 
+To generate a report for the group of labels of interest predicted by certain model (specify the report detail in `modules/submodules/score2performance/*snakemake`):
+```
+$ snakemake performance/keras_deepsea_copy/group1/histogram/pranav_test1_report.html
+```
+Here `keras_deepsea_copy` is model name, `group1` is the group of labels of interest, and `histogram` is the name of summarization method.
+
 # Structure of the pipeline
 
 The pipeline contains three modules:
