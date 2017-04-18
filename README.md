@@ -80,7 +80,7 @@ The pipeline contains three modules:
     - output: `score/[model_name]/[data]_allele1.hdf5` and `score/[model_name]/[data]_allele2.hdf5`
 3. `modules/score2performance.snakemake`: takes the predictions along with the group of labels of interest, output data table ready for downstream analysis in RDS format (combining all input variant sets with selected labels) and a quick summary per group of labels and summary method (specified in `config.yaml`).
     - input: see above and groups of labels
-    - output: RDS file per group `score/[model]/[group]/result.rds` and `performance/[model]/[group]/[method]/report.html`
+    - output: RDS file per group `score/[model]/[group]/[data]_result.feather` and `performance/[model]/[group]/[method]/[data]_report.html`
 
 # TODO
 
