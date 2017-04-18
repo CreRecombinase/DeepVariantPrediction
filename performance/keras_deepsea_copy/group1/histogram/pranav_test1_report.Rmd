@@ -1,6 +1,7 @@
 ---
 title: "Histogram of delta value between allele1 and allele2"
-output: html_document
+output:
+    html_document
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 ---
 
@@ -21,8 +22,7 @@ library(ggplot2)
 df <- read_feather('../../../../score/keras_deepsea_copy/group1/pranav_test1_result.feather')
 df$log_odds <- log(df$Allele1 / (1 - df$Allele1)) - log(df$Allele2 / (1 - df$Allele2))
 for(i in unique(df$Annotation)){
-    p <- ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = log_odds)) + ggtitle(paste('Histogram of', i))
-    print(p)
+    ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = log_odds)) + ggtitle(paste('Histogram of', i))
 }
 ```
 
@@ -31,7 +31,6 @@ for(i in unique(df$Annotation)){
 ```{r}
 df$distance <- df$Allele1 - df$Allele2
 for(i in unique(df$Annotation)){
-    p <- ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = distance)) + ggtitle(paste('Histogram of', i))
-    print(p)
+    ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = distance)) + ggtitle(paste('Histogram of', i))
 }
 ```

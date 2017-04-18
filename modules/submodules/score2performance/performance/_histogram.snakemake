@@ -4,7 +4,8 @@ rule write_rmd:
     output:
         o=temp('performance/{name}/{group}/histogram/{data}_report.Rmd')
     params:
-        model=config['model']['name']
+        model=config['model']['name'],
+	envir='../../../../'
     run:
         rmd = '''---
 title: "Histogram of delta value between allele1 and allele2"
@@ -27,7 +28,7 @@ plot is not interpretable
 ```{{r}}
 library(feather)
 library(ggplot2)
-df <- read_feather('{input}')
+df <- read_feather('{envir}{input}')
 df$log_odds <- log(df$Allele1 / (1 - df$Allele1)) - log(df$Allele2 / (1 - df$Allele2))
 for(i in unique(df$Annotation)){{
     ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = log_odds)) + ggtitle(paste('Histogram of', i))
@@ -42,7 +43,7 @@ for(i in unique(df$Annotation)){{
     ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = distance)) + ggtitle(paste('Histogram of', i))
 }}
 ```
-'''.format(input=input.i)
+'''.format(input=input.i, envir=params.envir)
         o = open(output.o, 'w')
         o.write(rmd)
         o.close()
@@ -51,6 +52,6 @@ rule compile_rmd:
     input:
         'performance/{name}/{group}/histogram/{data}_report.Rmd'
     output:
-        'performance/{name}/{group}/method_name/{data}_report.html'
+        'performance/{name}/{group}/histogram/{data}_report.html'
     shell:
-        '''Rscript -e "rmarkdown::render(input={input}, output_file={output})'''
+        '''Rscript -e "rmarkdown::render('./{input}')"'''
