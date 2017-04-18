@@ -81,7 +81,7 @@ The pipeline contains three modules:
 
 1. Add more formatting method at `modules/submodules/variant2input/formatting`. Now only Pranav data format has been implemented (from GWAS study, see format at `test/`).
 2. ~Debug `modules/input2score.snakemake`~
-3. Debug `modules/score2performance.snakemake` first part and implement at least one performance report script
+3. ~Debug `modules/score2performance.snakemake` first part and implement at least one performance report script~
 4. Add training snakemake script
 
 # Attention
