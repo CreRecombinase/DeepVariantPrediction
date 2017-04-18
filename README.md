@@ -57,6 +57,11 @@ To generate a report file for formatting step:
 $ snakemake data/pranav_test2.report.html
 ```
 
+To generate a data frame with a group of labels of interest, run:
+```
+$ snakemake score/keras_deepsea_copy/group1/pranav_test1_result.feather
+```
+
 To generate a report for the group of labels of interest predicted by certain model (specify the report detail in `modules/submodules/score2performance/*snakemake`):
 ```
 $ snakemake performance/keras_deepsea_copy/group1/histogram/pranav_test1_report.html
