@@ -1,12 +1,4 @@
-rule write_rmd:
-    input:
-        i=lambda wildcards: 'score/{name}/{group}/{data}_result.feather'.format(name=config['model']['name'], data=wildcards.data, group=wildcards.group)
-    output:
-        o=temp('performance/{name}/{group}/histogram/{data}_report.Rmd')
-    params:
-        model=config['model']['name']
-    run:
-        rmd = '''---
+---
 title: "Histogram of delta value between allele1 and allele2"
 output:
     html_document
@@ -15,7 +7,7 @@ date: `r format(Sys.time(), '%B %d, %Y')`
 
 Here we use two definitions of delta value:
 
-* Log Odds: $\log\\frac{{p_0}}{{1 - p_0}} - \log\\frac{{p_1}}{{1 - p_1}}$
+* Log Odds: $\log\frac{p_0}{1 - p_0} - \log\frac{p_1}{1 - p_1}$
 * Distance: $p_0 - p_1$
 
 **Attention**: the pipeline assume that allele1 is reference allele and allele2 is alternative allele.
@@ -24,33 +16,21 @@ plot is not interpretable
 
 ## Log Odds
 
-```{{r}}
+```{r}
 library(feather)
 library(ggplot2)
-df <- read_feather({input})
+df <- read_feather(score/keras_deepsea_copy/group1/pranav_test1_result.feather)
 df$log_odds <- log(df$Allele1 / (1 - df$Allele1)) - log(df$Allele2 / (1 - df$Allele2)
-for(i = unique(df$Annotation)){{
+for(i = unique(df$Annotation)){
     ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = log_odds)) + facet_grid(. ~ Annotation) + ggtitle(paste('Histogram of', i))
-}}
+}
 ```
 
 ## Distance
 
-```{{r}}
+```{r}
 df$distance <- df$Allele1 - df$Allele2
-for(i = unique(df$Annotation)){{
+for(i = unique(df$Annotation)){
     ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = distance)) + facet_grid(. ~ Annotation) + ggtitle(paste('Histogram of', i))
-}}
+}
 ```
-'''.format(input=input.i)
-        o = open(output.o, 'w')
-        o.write(rmd)
-        o.close()
-
-rule compile_rmd:
-    input:
-        'performance/{name}/{group}/histogram/{data}_report.Rmd'
-    output:
-        'performance/{name}/{group}/method_name/{data}_report.html'
-    shell:
-        '''Rscript -e "rmarkdown::render(input={input}, output_file={output})'''
