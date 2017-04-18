@@ -1,8 +1,7 @@
 ---
 title: "Histogram of delta value between allele1 and allele2"
-output:
-    html_document
-date: `r format(Sys.time(), '%B %d, %Y')`
+output: html_document
+date: "`r format(Sys.time(), '%B %d, %Y')`"
 ---
 
 Here we use two definitions of delta value:
@@ -19,10 +18,11 @@ plot is not interpretable
 ```{r}
 library(feather)
 library(ggplot2)
-df <- read_feather(score/keras_deepsea_copy/group1/pranav_test1_result.feather)
-df$log_odds <- log(df$Allele1 / (1 - df$Allele1)) - log(df$Allele2 / (1 - df$Allele2)
-for(i = unique(df$Annotation)){
-    ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = log_odds)) + facet_grid(. ~ Annotation) + ggtitle(paste('Histogram of', i))
+df <- read_feather('../../../../score/keras_deepsea_copy/group1/pranav_test1_result.feather')
+df$log_odds <- log(df$Allele1 / (1 - df$Allele1)) - log(df$Allele2 / (1 - df$Allele2))
+for(i in unique(df$Annotation)){
+    p <- ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = log_odds)) + ggtitle(paste('Histogram of', i))
+    print(p)
 }
 ```
 
@@ -30,7 +30,8 @@ for(i = unique(df$Annotation)){
 
 ```{r}
 df$distance <- df$Allele1 - df$Allele2
-for(i = unique(df$Annotation)){
-    ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = distance)) + facet_grid(. ~ Annotation) + ggtitle(paste('Histogram of', i))
+for(i in unique(df$Annotation)){
+    p <- ggplot(df[df$Annotation == i,]) + geom_histogram(aes(x = distance)) + ggtitle(paste('Histogram of', i))
+    print(p)
 }
 ```
