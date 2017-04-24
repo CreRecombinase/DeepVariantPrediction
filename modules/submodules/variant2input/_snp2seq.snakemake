@@ -42,8 +42,11 @@ rule extract_fasta:
         out=temp('data/{data}.formatted.expended.fa')
     params:
         assembly=config['genome_assembly']
+    log:
+        'logs/{data}_extract_fasta.log'
     script:
-        'scripts/snp2seq_extract.py'
+      '''bedtools getfasta -fi {params.assembly} -bed {input.a1} -fo {output.out} \
+    -name -tab 2> {log}'''
 
 rule generate_allele1_allele2:
     input:
