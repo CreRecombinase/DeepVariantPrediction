@@ -1,0 +1,21 @@
+data:
+  Diabetes_SNPs:
+    name: 'snp_list/Diabetes_SNPs.txt'
+    method: '_formatting_pranav.snakemake'
+window_size: 1000 # Attention: this should match the window size of the model below
+model:
+  name: 'keras_deepsea_copy'
+  snakemake: 'modules/submodules/input2score/_train_model_do_nothing.snakemake'
+  workdir: '../../yanyu/DeepSEA/debug'
+label:
+  group1:
+    E081 : 192
+    E082 : 193
+  group2:
+    E129 : 194
+    Noonan : 195
+genome_assembly: '/project2/xinhe/yanyul/databases/hg18/hg18.fa'
+performance:
+  mode1:
+    method: '_histogram.snakemake'
+    params: 'some other input here'

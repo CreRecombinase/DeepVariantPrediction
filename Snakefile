@@ -1,5 +1,5 @@
-configfile:
-    'config.yaml'
+# configfile:
+#     'config.yaml'
 include:
     'modules/variant2input.snakemake'
 include:
