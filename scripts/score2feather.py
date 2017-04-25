@@ -1,7 +1,7 @@
 import argparse
 parser = argparse.ArgumentParser(prog='score2feather.py', description='''
 	Given model prediction (all labels) extract labels of interest and
-    save them as RDS file.
+    save them as feather file.
 	''')
 parser.add_argument('--allele1', help='''
 	Allele1 prediction
@@ -32,7 +32,7 @@ a2 = my_python.getData(args.allele2, 'y_pred')
 total_table = pd.DataFrame()
 for i in range(len(args.label_num)):
     value1 = a1[:,args.label_num[i] - 1]
-    value2 = a2[:,args.label_num[i - 1]]
+    value2 = a2[:,args.label_num[i] - 1]
     sub_table = pd.DataFrame({
 				'Annotation' : args.label_name[i],
 				'Allele1' : value1,

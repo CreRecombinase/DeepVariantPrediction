@@ -8,12 +8,16 @@ model:
   snakemake: 'modules/submodules/input2score/_train_model_do_nothing.snakemake'
   workdir: '../../yanyu/DeepSEA/debug'
 label:
-  group1:
-    E081 : 192
-    E082 : 193
-  group2:
-    E129 : 194
-    Noonan : 195
+  positive:
+    AdultCD4Th0: 38
+    CD20plus: 50
+    GM12878: 54
+    MonocytesCD14plusRO01746: 108
+  control:
+    HFFMyc: 83
+    HPF: 101
+    RWPE1: 35
+    AoSMC: 2
 genome_assembly:
   fasta: '/project2/xinhe/yanyul/databases/hg19/hg19.fa'
   size: '/project2/xinhe/yanyul/databases/hg19/hg19.chrom.sizes'
