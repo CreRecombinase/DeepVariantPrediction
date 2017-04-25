@@ -34,7 +34,7 @@ rule score2feather:
     shell:
         '''python scripts/score2feather.py --allele1 {input.data_a1} --allele2 {input.data_a2} \
         --label_num {params.label_num} --label_name {params.label_name} \
-        --out {output} --id {input.idx}'''
+        --out {output} --id {input.idx} --rsid {input.rs}'''
 
 for performance_snkmk in config['performance']:
     include: 'submodules/score2performance/performance/{snkmk}'.format(snkmk=config['performance'][performance_snkmk]['method'])
