@@ -2,7 +2,7 @@ rule filter_by_chrom_size:
     input:
         a1='data/{data}.formatted'
     output:
-        o1='data/{data}.formatted.filter_by_size.pass',
+        o1=temp('data/{data}.formatted.filter_by_size.pass'),
         o2=temp('data/{data}.formatted.filter_by_size.unpass.txt')
     params:
         size=config['genome_assembly']['size'],
