@@ -23,13 +23,13 @@ rule report_bed2_pre2:
         a='data/{data}.checker.bed.temp'
     output:
         o=temp('data/{data}.checker.bed'),
-        o2=temp('data/{data}.checker.bed.wrong')
+        o2=temp('data/{data}.checker.bed.wrong.txt')
     script:
         'scripts/snp2seq_report_pre2.py'
 rule report_bed:
     input:
-        a='data/{data}.checker.bed'
-        a2='data/{data}.checker.bed.wrong'
+        a='data/{data}.checker.bed',
+        a2='data/{data}.checker.bed.wrong.txt'
     output:
         o='data/{data}.report.html',
     params:
