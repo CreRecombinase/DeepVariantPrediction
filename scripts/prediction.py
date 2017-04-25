@@ -13,6 +13,10 @@ parser.add_argument('--data', help='''
 parser.add_argument('--out')
 args = parser.parse_args()
 
+import os    
+os.environ['THEANO_FLAGS'] = "device=gpu"
+os.environ['floatX'] = 'float32'
+
 from keras.models import load_model
 import h5py
 import numpy as np
