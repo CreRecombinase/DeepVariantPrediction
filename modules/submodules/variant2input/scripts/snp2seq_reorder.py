@@ -7,7 +7,6 @@ with open(snakemake.input.fasta) as o:
         i = i.strip()
         info = i.split('\t')
         allele = info[0].split(':')
-        refs.append(info[1].upper())
         if info[1].upper() != allele[1] and info[1].upper() != allele[2]:
             behavior.append(info[1].upper())
             continue
@@ -17,7 +16,7 @@ with open(snakemake.input.fasta) as o:
         behavior.append(0)
 
 good = open(snakemake.output.o, 'w')
-bad = open(snakemake.outptu.o2, 'w')
+bad = open(snakemake.output.o2, 'w')
 counter = 0
 with open(snakemake.input.a, 'r') as o:
     for i in o:

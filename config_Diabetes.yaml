@@ -16,7 +16,7 @@ label:
     Noonan : 195
 genome_assembly:
   fasta: '/project2/xinhe/yanyul/databases/hg18/hg18.fa'
-  size: '/project2/xinhe/yanyul/database/hg18/hg18.chrom.sizes'
+  size: '/project2/xinhe/yanyul/databases/hg18/hg18.chrom.sizes'
 performance:
   mode1:
     method: '_histogram.snakemake'

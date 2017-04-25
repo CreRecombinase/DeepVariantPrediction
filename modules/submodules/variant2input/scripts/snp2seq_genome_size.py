@@ -14,7 +14,7 @@ else:
 
 size_dic = read_size(snakemake.params.size)
 passed = open(snakemake.output.o1, 'w')
-notpassed = open(snakemake.outptu.o2, 'w')
+notpassed = open(snakemake.output.o2, 'w')
 
 with open(snakemake.input.a1, 'r') as o:
     for i in o:
@@ -22,10 +22,10 @@ with open(snakemake.input.a1, 'r') as o:
         info = i.split('\t')
         chrm = info[0]
         end = int(info[2])
-        if size_dic[chrm] > end:
+        if size_dic[chrm] < end:
             notpassed.write(i + '\tInvalid Site\n')
             continue
-        if size_dic[chrm] > end + end_expand:
+        if size_dic[chrm] < end + end_expand:
             notpassed.write(i + '\tWindow Is Too big\n')
             continue
         passed.write(i + '\n')

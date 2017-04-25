@@ -1,12 +1,12 @@
 rule filter_by_chrom_size:
     input:
         a1='data/{data}.formatted'
-    params:
-        size=config['genome_assembly']['size'],
-        window=config['window_size']
     output:
         o1='data/{data}.formatted.filter_by_size.pass',
         o2=temp('data/{data}.formatted.filter_by_size.unpass.txt')
+    params:
+        size=config['genome_assembly']['size'],
+        window=config['window_size']
     script:
         'scripts/snp2seq_genome_size.py'
 
@@ -34,7 +34,7 @@ rule reorder_allele12:
 rule report_bed:
     input:
         size='data/{data}.formatted.filter_by_size.unpass.txt',
-        reorder='data/{data}.cannot.reorder.txt,
+        reorder='data/{data}.cannot.reorder.txt',
         passed='data/{data}.formatted.filter_by_size.pass.reorder',
         total='data/{data}.formatted'
     output:

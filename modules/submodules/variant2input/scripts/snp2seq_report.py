@@ -6,7 +6,10 @@ def file_len(fname):
     with open(fname) as f:
         for i, l in enumerate(f):
             pass
-    return i + 1
+    try:
+        return i + 1
+    except NameError:
+        return 0
 # end
 
 outof_size = file_len(snakemake.input.size)
