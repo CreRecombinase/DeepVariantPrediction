@@ -32,7 +32,7 @@ testmat.close()
 outfile = args.out
 
 print('Predicting on test sequences')
-y = model.predict(x, verbose=2)
+y = model.predict(x, verbose=1)
 ny = int(y.shape[0] / 2)
 y = (y[:ny] + y[ny:]) / 2
 out = h5py.File(outfile, 'w')
