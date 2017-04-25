@@ -63,7 +63,7 @@ rule extract_fasta:
         assembly=config['genome_assembly']['fasta']
     log:
         'logs/{data}_extract_fasta.log'
-    script:
+    shell:
       '''bedtools getfasta -fi {params.assembly} -bed {input.a1} -fo {output.out} \
     -name -tab 2> {log}'''
 
