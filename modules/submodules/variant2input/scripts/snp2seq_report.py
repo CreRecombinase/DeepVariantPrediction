@@ -1,22 +1,35 @@
 from snakemake.utils import report
 import pandas as pd
 
-dtf = pd.read_csv(snakemake.input.a, sep = '\t')
-match_allele1 = (dtf.Allele1 == dtf.Ref).sum()
-match_allele2 = (dtf.Allele2 == dtf.Ref).sum()
-total = dtf.shape[0]
-notmatch = total - match_allele1 - match_allele2
+# derived from http://stackoverflow.com/questions/845058/how-to-get-line-count-cheaply-in-python
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
+# end
+
+outof_size = file_len(snakemake.input.size)
+notmatch = file_len(snakemake.input.reorder)
+passed = file_len(snakemake.input.passed)
+total =  file_len(snakemake.input.total)
+attention = 'nothing'
+if total != outof_size + notmatch + passed:
+    attention = 'total != passed + not_matched + out_of_genome'
 
 report("""
 Variant Formatting Report
 =========================
 
-The unmatched allele1, allele2, reference allele are summarized here table_
+The out of range variants are summarized here table1_
+The unmatched allele1, allele2, reference allele are summarized here table2_
 The formatting step is done by `{snakemake.params.formatting}`
 
 * total variants = {total}
-* variants match allele1 = {match_allele1}
-* variants match allele2 = {match_allele2}
-* number of unmatched variants = {notmatch}
+* variants that passed QC = {passed}
+* variants that are out of genome range = {outof_size}
+* variants that cannot match reference allele = {notmatch}
 
-""", snakemake.output.o, table=snakemake.input.a2)
+ATTENTION: {attention}
+
+""", snakemake.output.o, table1 = snakemake.input.size, table2=snakemake.input.reorder)

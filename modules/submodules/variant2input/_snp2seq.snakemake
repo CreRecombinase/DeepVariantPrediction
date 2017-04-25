@@ -1,35 +1,42 @@
-rule expand_bed:
+rule filter_by_chrom_size:
     input:
         a1='data/{data}.formatted'
-    output:
-        out=temp('data/{data}.formatted.expended')
     params:
+        size=config['genome_assembly']['size'],
         window=config['window_size']
-    script:
-        'scripts/snp2seq_expand.py'
-
-rule report_bed_pre1:
-    input:
-        a='data/{data}.formatted'
     output:
-        o=temp('data/{data}.checker.bed.temp')
+        o1='data/{data}.formatted.filter_by_size.pass',
+        o2=temp('data/{data}.formatted.filter_by_size.unpass.txt')
+    script:
+        'scripts/snp2seq_genome_size.py'
+
+rule extract_reference_allele:
+    input:
+        a='data/{data}.formatted.filter_by_size.pass'
+    output:
+        o=temp('data/{data}.checker.ref.fasta')
     params:
-        assembly=config['genome_assembly']
+        assembly=config['genome_assembly']['fasta']
     shell:
         '''bedtools getfasta -fi {params.assembly} -bed {input.a} -fo {output.o} \
         -name -tab'''
-rule report_bed2_pre2:
+
+rule reorder_allele12:
     input:
-        a='data/{data}.checker.bed.temp'
+        fasta='data/{data}.checker.ref.fasta',
+        a='data/{data}.formatted.filter_by_size.pass'
     output:
-        o=temp('data/{data}.checker.bed'),
-        o2=temp('data/{data}.checker.bed.wrong.txt')
+        o='data/{data}.formatted.filter_by_size.pass.reorder',
+        o2=temp('data/{data}.cannot.reorder.txt')
     script:
-        'scripts/snp2seq_report_pre2.py'
+        'scripts/snp2seq_reorder.py'
+
 rule report_bed:
     input:
-        a='data/{data}.checker.bed',
-        a2='data/{data}.checker.bed.wrong.txt'
+        size='data/{data}.formatted.filter_by_size.unpass.txt',
+        reorder='data/{data}.cannot.reorder.txt,
+        passed='data/{data}.formatted.filter_by_size.pass.reorder',
+        total='data/{data}.formatted'
     output:
         o='data/{data}.report.html',
     params:
@@ -37,13 +44,23 @@ rule report_bed:
     script:
         'scripts/snp2seq_report.py'
 
+rule expand_bed:
+    input:
+        a1='data/{data}.formatted.filter_by_size.pass.reorder'
+    output:
+        out=temp('data/{data}.formatted.expended')
+    params:
+        window=config['window_size']
+    script:
+        'scripts/snp2seq_expand.py'
+
 rule extract_fasta:
     input:
         a1='data/{data}.formatted.expended'
     output:
         out=temp('data/{data}.formatted.expended.fa')
     params:
-        assembly=config['genome_assembly']
+        assembly=config['genome_assembly']['fasta']
     log:
         'logs/{data}_extract_fasta.log'
     script:

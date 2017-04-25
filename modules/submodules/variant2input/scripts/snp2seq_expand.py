@@ -8,7 +8,7 @@ if snakemake.params.window % 2 == 0:
 	end = snakemake.params.window / 2
 else:
 	start = (snakemake.params.window - 1) / 2
-	end = -start
+	end = start
 	even_flag = 1
 midpos = start
 cmd = '''cat {input} | awk -F"\\t" '{{ printf $1"\\t"$2-{start}"\\t"$3+{end}; \
