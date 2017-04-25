@@ -15,7 +15,7 @@ rule score2feather:
     input:
         data_a1='score/{name}/{data}_allele1.hdf5'.format(name=config['model']['name'], data='{data}'),
         data_a2='score/{name}/{data}_allele2.hdf5'.format(name=config['model']['name'], data='{data}'),
-        id='data/{data}_passed_id_list.txt'
+        idx='data/{data}_passed_id_list.txt'
     params:
         label_num=lambda wildcards: ' '.join([ str(config['label'][wildcards.group][i]) for i in config['label'][wildcards.group].keys() ]),
         label_name=lambda wildcards: ' '.join([ i for i in config['label'][wildcards.group].keys() ])
@@ -24,7 +24,7 @@ rule score2feather:
     shell:
         '''scripts/score2feather.py --allele1 {input.data_a1} --allele2 {input.data_a2} \
         --label_num {params.label_num} --label_name {params.label_name} \
-        --out {output} --id {input.id}'''
+        --out {output} --id {input.idx}'''
 
 for performance_snkmk in config['performance']:
     include: 'submodules/score2performance/performance/{snkmk}'.format(snkmk=config['performance'][performance_snkmk]['method'])
