@@ -13,7 +13,8 @@ def seq2hdf5(fasta, out, window, encode):
     with open(fasta) as infile:
     	for line in infile:
     		seq = line.strip().split('\t')[1].upper()
-    		digit_seq = np.zeros((window, 4))
+		print(len(seq))    
+		digit_seq = np.zeros((window, 4))
     		for i in range(len(seq)):
     			if seq[i] not in encode:
     				continue
