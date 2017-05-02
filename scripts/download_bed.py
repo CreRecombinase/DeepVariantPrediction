@@ -13,6 +13,7 @@ parser.add_argument('--out')
 args = parser.parse_args()
 
 import os
+import numpy as np
 
 e = np.genfromtxt(args.bed_list, skip_header=True, dtype=str)
 bed_url = e[args.id - 1]

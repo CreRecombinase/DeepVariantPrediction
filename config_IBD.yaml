@@ -25,5 +25,5 @@ performance:
   mode1:
     method: '_histogram.snakemake'
     params: 'some other input here'
-bed_list: 'path_to_bed_file_list'
-cadd: 'path_to_cadd_scores'
+bed_list: 'metadata/nmeth.3547-S2.csv'
+cadd: 'path_to_cadd'
