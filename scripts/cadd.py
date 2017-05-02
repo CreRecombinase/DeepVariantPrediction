@@ -18,6 +18,7 @@ import sys
 if 'scripts' not in sys.path:
     sys.path.insert(0, 'scripts')
 import my_python
+import re
 
 ids = []
 rss = []
@@ -34,14 +35,17 @@ with open(args.input_bed, 'r') as f:
         alt = info[2]
         idx = info[0]
         rs = snp[4]
-        query = '{chr}:{pos}-{pos}'.format(chr=re.sub('chr', '', chrm), pos=pos1)
-        cmd = 'tabix {database} {query}'.format(database=args.cadd_path, query=query)
-        result = my_python.mySubprocess(cmd, False)
-
-        if result.decode("utf-8") == '':
-            pass
-        else:
+        # query = '{chr}:{pos}-{pos}'.format(chr=re.sub('chr', '', chrm), pos=pos1)
+        # cmd = 'tabix {database} {query}'.format(database=args.cadd_path, query=query)
+        # result = my_python.mySubprocess(cmd, False)
+        my_python.eprint('-'.join(snp))
+        # continue
+        # if result.decode("utf-8") == '':
+        #     pass
+        # else:
             for i in result.decode("utf-8").split('\n'):
+                if i == '':
+                    continue
                 detail = i.split('\t')
                 if detail[2] != ref:
                     my_python.eprint('Wrong ref at {chr}:{pos} {rs}'.format(chr=chrm, pos=pos1, rs=rs))
