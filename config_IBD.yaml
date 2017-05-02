@@ -26,4 +26,4 @@ performance:
     method: '_histogram.snakemake'
     params: 'some other input here'
 bed_list: 'metadata/nmeth.3547-S2.csv'
-cadd: 'path_to_cadd'
+cadd: '/project2/xinhe/yanyul/databases/CADD/whole_genome_SNVs.tsv.gz'

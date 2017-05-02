@@ -1,3 +1,15 @@
 for i in config['data']:
     include: '''../modules/submodules/variant2input/formatting/{snkmk}'''.format(snkmk=config['data'][i]['method'])
 include: '../modules/submodules/variant2input/_snp2seq.snakemake'
+
+rule get_cadd:
+    input:
+        'data/{data}.formatted.filter_by_size.pass.reorder'
+    output:
+        'score/cadd/{data}.feather'
+    params:
+        config['cadd']
+    log:
+        'logs/cadd/{data}.log'
+    shell:
+        'python scripts/cadd.py --cadd_path {params[0]} --input_bed {input[0]} --output {output[0]} 2> {log[0]}'
