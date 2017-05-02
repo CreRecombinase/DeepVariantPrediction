@@ -6,6 +6,10 @@ include:
     'modules/input2score.snakemake'
 include:
     'modules/score2performance.snakemake'
+include:
+    'branch/bed.snakemake'
+include:
+    'branch/cadd.snakemake'
 
 rule all:
     input:
