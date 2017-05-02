@@ -1,0 +1,41 @@
+for i in config['data']:
+    include: '''../modules/submodules/variant2input/formatting/{snkmk}'''.format(snkmk=config['data'][i]['method'])
+include: 'submodules/variant2input/_snp2seq.snakemake'
+
+def get_all_labels_by_group(wildcards):
+    re = []
+    name = []
+    for i in config['label'][wildcards.group]:
+        re.append('data/{data}.{bed}.intersect.bed.gz'.format(data = config['data'], bed = i))
+        name.append(i)
+    return (re, name)
+
+
+rule download:
+    input:
+        config['bed_list']
+    params:
+        id = lambda wildcards: config['label'][wildcards.group][wildcards.bed]
+    output:
+        'data/{bed}.bed.gz'
+    shell:
+        'python scripts/download_bed.py --bed_list {input[0]} --id {params.id} --out {output[0]}'
+
+rule intersect:
+    input:
+        'data/{data}.formatted.filter_by_size.pass.reorder'
+        'data/{bed}.bed.gz'
+    output:
+        temp('data/{data}.{bed}.intersect.bed.gz')
+    shell:
+        '''bedtools intersect -a {input[0]} -b {input[1]} | gzip > {output[0]}'''
+
+rule summarize:
+    input:
+        files = get_all_labels_by_group(wildcards)[0]
+    output:
+        'score/bed/{group}.{data}_result.feather'.format(data='{data}', group='{group}')
+    params:
+        names = get_all_labels_by_group(wildcards)[1]
+    shell:
+        'python scripts/bed2feather.py --inputs {input.files} --output {output[0]} --names {params.names}'
