@@ -27,11 +27,11 @@ phreds = []
 
 with open(args.input_bed, 'r') as f:
     for snp in f:
-        snp = snp.strip()
-        snp = snp.split('\t')
+		snp = snp.strip()
+		snp = snp.split('\t')
         chrm = snp[0]
 		pos0 = snp[1]
-        pos1 = snp[2]
+		pos1 = snp[2]
         info = snp[3].split(':')
         ref = info[1]
         alt = info[2]
