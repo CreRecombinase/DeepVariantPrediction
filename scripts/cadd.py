@@ -55,7 +55,7 @@ with open(args.input_bed, 'r') as f:
                 break
 
 total_table = pd.DataFrame({
-            'Varient.ID' : ids.astype(int),
+            'Varient.ID' : np.array(ids).astype(int),
             'rsID' : rss,
             'CADD.Phred' : phreds,
             })
