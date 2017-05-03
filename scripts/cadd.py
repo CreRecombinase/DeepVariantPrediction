@@ -14,6 +14,7 @@ import h5py
 import numpy as np
 import pandas as pd
 import feather
+import pysam
 import sys
 if 'scripts' not in sys.path:
     sys.path.insert(0, 'scripts')
@@ -29,34 +30,29 @@ with open(args.input_bed, 'r') as f:
         snp = snp.strip()
         snp = snp.split('\t')
         chrm = snp[0]
+		pos0 = snp[1]
         pos1 = snp[2]
         info = snp[3].split(':')
         ref = info[1]
         alt = info[2]
         idx = info[0]
         rs = snp[4]
-        # query = '{chr}:{pos}-{pos}'.format(chr=re.sub('chr', '', chrm), pos=pos1)
-        # cmd = 'tabix {database} {query}'.format(database=args.cadd_path, query=query)
-        # result = my_python.mySubprocess(cmd, False)
-        my_python.eprint('-'.join(snp))
-        # continue
-        # if result.decode("utf-8") == '':
-        #     pass
-        # else:
-            for i in result.decode("utf-8").split('\n'):
-                if i == '':
-                    continue
-                detail = i.split('\t')
-                if detail[2] != ref:
-                    my_python.eprint('Wrong ref at {chr}:{pos} {rs}'.format(chr=chrm, pos=pos1, rs=rs))
-                    break
-                if detail[3] != alt:
-                    continue
-                else:
-                    phred = float(detail[-1])
-                    ids.append(idx)
-                    rss.append(rs)
-                    phreds.append(phred)
+		my_python.eprint('-'.join(snp))
+		tbx = pysam.TabixFile(args.cadd_path)
+		iterator = tbx.fetch(re.sub('chr', '', chrm), int(pos0), int(pos1))
+		for i in iterator:
+			detail = i.split('\t')
+			if detail[2] != ref:
+				my_python.eprint('Wrong ref at {chr}:{pos} {rs}'.format(chr=chrm, pos=pos1, rs=rs))
+				break
+			if detail[3] != alt:
+				continue
+			else:
+				phred = float(detail[-1])
+				ids.append(idx)
+				rss.append(rs)
+				phreds.append(phred)
+        		break
 
 total_table = pd.DataFrame({
 			'Varient.ID' : ids.astype(int),
