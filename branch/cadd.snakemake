@@ -12,4 +12,4 @@ rule get_cadd:
     log:
         'logs/cadd/{data}.log'
     shell:
-        'python scripts/cadd.py --cadd_path {params[0]} --input_bed {input[0]} --output {output[0]} 2> {log}'
+        'python -u scripts/cadd.py --cadd_path {params[0]} --input_bed {input[0]} --output {output[0]} > {log}'

@@ -1,7 +1,7 @@
 import sys
 
-def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
+def eprint(string):
+    sys.stderr.write(string + '\n')
     
 from ntpath import basename
 import os
