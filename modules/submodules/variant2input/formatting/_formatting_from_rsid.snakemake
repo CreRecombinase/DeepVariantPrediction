@@ -19,5 +19,40 @@ rule rsid2coordinate:
         lambda wildcards: config['data'][wildcards.data]['database']
     shell:
         'zcat {params[0]} | grep -f {input[0]} | gzip > {output[0]}'
-
-# rule coordinate2
+# rule collect_coordinate_prepare:
+#     input:
+#         extracted = 'data/{data}_with_coordinate_and_passed.gz',
+#     output:
+#         temp('data/{data}_with_coordinate_and_passed_reverse_extract_temp.txt')
+#     params:
+#         lambda wildcards: config['data'][wildcards.data]['data_rsid_col']
+#     shell:
+#         '''zcat {input.extracted} | cut -f{params[0]} | awk '{{print $1"\\t"}}' > {output[0]}'''
+rule collect_coordinate:
+    input:
+        extracted = 'data/{data}_with_coordinate_and_passed.gz',
+        # lst = 'data/{data}_with_coordinate_and_passed_reverse_extract_temp.txt',
+        data = lambda wildcards: config['data'][wildcards.data]['name']
+    params:
+        lambda wildcards: config['data'][wildcards.data]['data_rsid_col']
+    output:
+        temp('data/{data}_with_coordinate_and_passed_reverse_extract.gz')
+    shell:
+        '''zcat {input.data} | grep -f (zcat {input.extracted} | cut -f{params[0]} | awk '{{print $1"\\t"}}) | gzip > {output[0]}'''
+rule merge:
+    input:
+        'data/{data}_with_coordinate_and_passed_reverse_extract.gz',
+        'data/{data}_with_coordinate_and_passed.gz'
+    output:
+        temp('data/{data}_merged.gz')
+    shell:
+        '''paste -d <(zcat {input[0]}) <(zcat {input[1]}) | gzip > {output[0]}'''
+rule formatting_final:
+    input:
+        'data/{data}_merged.gz'
+    output:
+        'data/{data}.formatted'
+    shell:
+        '''zcat {input[0]} | \
+awk -F"\\t" '{{print $11"\\t"$12"\\t"$13"\\t"NR":"$4":"$5":"$1"\\t"$1"\\t"$17"\\t"$18"\\t"$19}}' \
+> {output[0]}'''
