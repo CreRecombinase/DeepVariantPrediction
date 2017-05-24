@@ -8,8 +8,8 @@ rule prepare_rsid:
         temp('data/{data}_rsid_temp.txt')
     params:
         lambda wildcards: config['data'][wildcards.data]['column']
-    run:
-        'cat {input[0]} | cut -f{params[0]} > {output[0]}'
+    shell:
+        'cat {input[0]} | cut -f{params[0]} | awk '{print $1"\t"}' > {output[0]}'
 rule rsid2coordinate:
     input:
         'data/{data}_rsid_temp.txt'
@@ -17,7 +17,7 @@ rule rsid2coordinate:
         temp('data/{data}_with_coordinate_and_passed.gz')
     params:
         lambda wildcards: config['data'][wildcards.data]['database']
-    run:
+    shell:
         'cat {params[0]} | grep -f {input[0]} > {output[0]}'
 
 # rule coordinate2
