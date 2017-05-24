@@ -38,7 +38,7 @@ rule collect_coordinate:
     output:
         temp('data/{data}_with_coordinate_and_passed_reverse_extract.gz')
     shell:
-        '''zcat {input.data} | grep -f (zcat {input.extracted} | cut -f{params[0]} | awk '{{print $1"\\t"}}) | gzip > {output[0]}'''
+        '''zcat {input.data} | grep -f <(zcat {input.extracted} | cut -f{params[0]} | awk '{{print $1"\\t"}}') | gzip > {output[0]}'''
 rule merge:
     input:
         'data/{data}_with_coordinate_and_passed_reverse_extract.gz',
@@ -46,7 +46,7 @@ rule merge:
     output:
         temp('data/{data}_merged.gz')
     shell:
-        '''paste -d <(zcat {input[0]}) <(zcat {input[1]}) | gzip > {output[0]}'''
+        '''paste <(zcat {input[0]}) <(zcat {input[1]}) | gzip > {output[0]}'''
 rule formatting_final:
     input:
         'data/{data}_merged.gz'
