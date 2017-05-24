@@ -1,5 +1,5 @@
 data:
-  IBD_SNPs:
+  adipogen:
     name: 'snp_list/adipogen.txt.gz'
     method: '_formatting_from_rsid.snakemake'
     column: 1

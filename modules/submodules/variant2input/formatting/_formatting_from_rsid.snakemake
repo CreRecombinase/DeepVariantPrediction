@@ -9,7 +9,7 @@ rule prepare_rsid:
     params:
         lambda wildcards: config['data'][wildcards.data]['column']
     shell:
-        'cat {input[0]} | cut -f{params[0]} | awk '{print $1"\t"}' > {output[0]}'
+        '''zcat {input[0]} | cut -f{params[0]} | awk '{{print $1"\\t"}}' > {output[0]}'''
 rule rsid2coordinate:
     input:
         'data/{data}_rsid_temp.txt'
@@ -18,6 +18,6 @@ rule rsid2coordinate:
     params:
         lambda wildcards: config['data'][wildcards.data]['database']
     shell:
-        'cat {params[0]} | grep -f {input[0]} > {output[0]}'
+        'zcat {params[0]} | grep -f {input[0]} | gzip > {output[0]}'
 
 # rule coordinate2
