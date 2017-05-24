@@ -51,7 +51,7 @@ rule merge:
     shell:
         '''python scripts/merge_rsid_formatting.py --input_list {input[0]} \
         --input_db {input[1]} --output {output[0]}\
-        --col_list {params[0]} --col_db {params[1]}'''
+        --col_list {params[1]} --col_db {params[0]}'''
         # '''paste <(zcat {input[0]}) <(zcat {input[1]}) | gzip > {output[0]}'''
 rule formatting_final:
     input:
@@ -60,5 +60,5 @@ rule formatting_final:
         'data/{data}.formatted'
     shell:
         '''zcat {input[0]} | \
-awk -F"\\t" '{{print $11"\\t"$12"\\t"$13"\\t"NR":"$4":"$5":"$1"\\t"$1"\\t"$17"\\t"$18"\\t"$19}}' \
+awk -F"\\t" '{{print $11"\\t"$12"\\t"$13"\\t"NR":"$4":"$5":"$16"\\t"$1"\\t"$17"\\t"$18"\\t"$19}}' \
 > {output[0]}'''

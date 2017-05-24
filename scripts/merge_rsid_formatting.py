@@ -25,20 +25,21 @@ import gzip
 
 list_dic = {}
 counter = 0
-with gzip.open(args.input_list,'rb') as f:
+with gzip.open(args.input_db,'rb') as f:
     for i in f:
-        i = i.split('\t')
-        rsID = i[args.col_list - 1]
+        i = i.decode().split('\t')
+        rsID = i[args.col_db - 1]
         list_dic[rsID] = counter
         counter += 1
 reorder = []
-with gzip.open(args.input_db,'rb') as f:
+with gzip.open(args.input_list,'rb') as f:
     for i in f:
-        i = i.split('\t')
-        rsID = i[args.col_db - 1]
+        i = i.decode().split('\t')
+        rsID = i[args.col_list - 1]
         reorder.append(list_dic[rsID])
 table = pd.read_table(args.input_db, header = None, compression='gzip')
-table.reindex(reorder)
-table2 = pf.read_table(args.input_list, )
-merged = pd.concat([table2, table], axis=1)
-merged.to_csv(args.output, sep = '\t', compression='gzip')
+table = table.reindex(reorder).reset_index(drop=True)
+table2 = pd.read_table(args.input_list, header=None, compression='gzip')
+# merged = pd.concat([table2, table], axis=1)
+merged = pd.concat([table2, table], axis=1, ignore_index=True)
+merged.to_csv(args.output, sep = '\t', compression='gzip', header=False, index=False)
