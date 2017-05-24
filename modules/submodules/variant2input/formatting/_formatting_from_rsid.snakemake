@@ -43,10 +43,16 @@ rule merge:
     input:
         'data/{data}_with_coordinate_and_passed_reverse_extract.gz',
         'data/{data}_with_coordinate_and_passed.gz'
+    params:
+        lambda wildcards: config['data'][wildcards.data]['data_rsid_col'],
+        lambda wildcards: config['data'][wildcards.data]['column']
     output:
         temp('data/{data}_merged.gz')
     shell:
-        '''paste <(zcat {input[0]}) <(zcat {input[1]}) | gzip > {output[0]}'''
+        '''python scripts/merge_rsid_formatting.py --input_list {input[0]} \
+        --input_db {input[1]} --output {output[0]}\
+        --col_list {params[0]} --col_db {params[1]}'''
+        # '''paste <(zcat {input[0]}) <(zcat {input[1]}) | gzip > {output[0]}'''
 rule formatting_final:
     input:
         'data/{data}_merged.gz'
