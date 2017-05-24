@@ -29,3 +29,6 @@ for(i in 1 : ngroups){
                       values=rs_list[start:end], mart=snp_mart)
   snp_locations <- rbind(snp_locations, snp_locations_i)
 }
+gz1 <- gzfile(opt$output, "w")
+write.csv(snp_locations, gz1)
+close(gz1)

@@ -1,2 +1,13 @@
 ## do something here
 ## see scripts/rsid_to_coordinate.R
+
+rule rsid2coordinate:
+    input:
+        lambda wildcards: config['data'][wildcards.data]['name']
+    output:
+        temp('data/{data}_with_coordinate_and_passed.gz')
+    shell:
+        '''Rscript rsid_to_coordinate.R --vanilla --input {input[0]} --output {output[0]} \
+        --group_size 10000'''
+
+# rule coordinate2

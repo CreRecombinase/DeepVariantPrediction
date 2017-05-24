@@ -1,0 +1,29 @@
+data:
+  IBD_SNPs:
+    name: 'snp_list/adipogen.txt.gz'
+    method: '_formatting_from_rsid.snakemake'
+window_size: 1000 # Attention: this should match the window size of the model below
+model:
+  name: 'keras_deepsea_copy'
+  snakemake: 'modules/submodules/input2score/_train_model_do_nothing.snakemake'
+  workdir: '../../yanyu/DeepSEA/debug'
+label:
+  positive:
+    AdultCD4Th0: 38
+    CD20plus: 50
+    GM12878: 54
+    MonocytesCD14plusRO01746: 108
+  control:
+    HFFMyc: 83
+    HPF: 101
+    RWPE1: 35
+    AoSMC: 2
+genome_assembly:
+  fasta: '/project2/xinhe/yanyul/databases/hg19/hg19.fa'
+  size: '/project2/xinhe/yanyul/databases/hg19/hg19.chrom.sizes'
+performance:
+  mode1:
+    method: '_histogram.snakemake'
+    params: 'some other input here'
+bed_list: 'metadata/nmeth.3547-S2.csv'
+cadd: '/project2/xinhe/yanyul/databases/CADD/whole_genome_SNVs.tsv.gz'
