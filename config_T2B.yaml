@@ -2,6 +2,8 @@ data:
   IBD_SNPs:
     name: 'snp_list/adipogen.txt.gz'
     method: '_formatting_from_rsid.snakemake'
+    column: 1
+    database: '/project2/xinhe/yanyul/databases/snp138.txt.gz'
 window_size: 1000 # Attention: this should match the window size of the model below
 model:
   name: 'keras_deepsea_copy'
