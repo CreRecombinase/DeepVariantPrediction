@@ -1,6 +1,15 @@
-rule filter_by_chrom_size:
+rule filter_valid_snp:
     input:
         a1='data/{data}.formatted'
+    output:
+        o1=temp('data/{data}.formatted.valid.pass'),
+        o2=temp('data/{data}.formatted.valid.unpass.txt')
+    scripts:
+        'scripts/snp2seq_valid_snp.py'
+
+rule filter_by_chrom_size:
+    input:
+        a1='data/{data}.formatted.valid.pass'
     output:
         o1=temp('data/{data}.formatted.filter_by_size.pass'),
         o2=temp('data/{data}.formatted.filter_by_size.unpass.txt')
