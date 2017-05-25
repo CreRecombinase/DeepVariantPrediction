@@ -2,7 +2,8 @@ passed = open(snakemake.output.o1, 'w')
 notpassed = open(snakemake.output.o2, 'w')
 
 chr_dic = [ 'chr' + str(i) for i in range(1, 24) ]
-chr_dic.append('chrX', 'chrY')
+chr_dic.append('chrX')
+chr_dic.append('chrY')
 
 with open(snakemake.input.a1, 'r') as o:
     for i in o:

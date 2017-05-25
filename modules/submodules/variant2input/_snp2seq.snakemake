@@ -4,7 +4,7 @@ rule filter_valid_snp:
     output:
         o1=temp('data/{data}.formatted.valid.pass'),
         o2=temp('data/{data}.formatted.valid.unpass.txt')
-    scripts:
+    script:
         'scripts/snp2seq_valid_snp.py'
 
 rule filter_by_chrom_size:
