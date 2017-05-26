@@ -12,15 +12,63 @@ model:
   workdir: '../../yanyu/DeepSEA/debug'
 label:
   positive:
-    AdultCD4Th0: 38
-    CD20plus: 50
-    GM12878: 54
-    MonocytesCD14plusRO01746: 108
+    Osteobl-DNase-None: 30
+    CD34+_Mobilized-DNase-None: 51
+    HUVEC-DNase-None: 61
+    HPAEC-DNase-None: 98
+    HUVEC-CTCF-None: 146
+    HUVEC-EZH2-None: 147
+    HUVEC-Pol2(b)-None: 148
+    Osteobl-CTCF-None: 170
+    HUVEC-Pol2-4H8-None: 332
+    HUVEC-Pol2-None: 333
+    HUVEC-c-Fos-None: 583
+    HUVEC-c-Jun-None: 584
+    HUVEC-GATA2-None: 585
+    HUVEC-Max-None: 586
+    HUVEC-Pol2-None: 587
+    HUVEC-c-Myc-None: 743
+    HUVEC-CTCF-None: 744
+    HUVEC-Pol2-None: 745
+    HUVEC-CTCF-None: 803
+    Osteoblasts-H2AZ-None: 911
+    Osteoblasts-H3K27ac-None: 912
+    Osteoblasts-H3K27me3-None: 913
+    Osteoblasts-H3K36me3-None: 914
+    Osteoblasts-H3K4me1-None: 915
+    Osteoblasts-H3K4me2-None: 916
+    Osteoblasts-H3K4me3-None: 917
+    Osteoblasts-H3K79me2-None: 918
+    Osteoblasts-H3K9me3-None: 919
   control:
-    HFFMyc: 83
-    HPF: 101
-    RWPE1: 35
-    AoSMC: 2
+    NHDF-Ad-H2AZ-None: 877
+    GM12878-USF2-None: 445
+    GM12878-COREST-None: 415
+    GM12878-GABP-None: 217
+    HAc-CTCF-None: 783
+    HA-sp-CTCF-None: 784
+    Ishikawa-DNase-4OHTAM_20nM_72hr: 24
+    H1-hESC-SP2-None: 280
+    GM12878-CHD1-None: 413
+    GM12878-BCL3-None: 209
+    MCF10A-Er-Src-c-Fos-4OHTAM_1uM_4hr: 684
+    AoSMC-DNase-None: 2
+    H9ES-DNase-None: 14
+    H1-hESC-RXRA-None: 276
+    GM12878-Max-None: 422
+    GM12892-Pol2-4H8-None: 256
+    GM12892-YY1-None: 259
+    PBDE-GATA1-None: 709
+    NH-A-H3K27ac-None: 867
+    HPF-CTCF-None: 800
+    H1-hESC-JunD-None: 476
+    GM12891-Pol2-None: 250
+    Monocytes-CD14+RO01746-H3K9me3-None: 864
+    H1-hESC-CTCF-None: 735
+    H1-hESC-CHD1-None: 130
+    H1-hESC-H3K9me3-None: 838
+    H1-hESC-Bach1-None: 467
+    GM12878-NFIC-None: 223
 genome_assembly:
   fasta: '/project2/xinhe/yanyul/databases/hg19/hg19.fa'
   size: '/project2/xinhe/yanyul/databases/hg19/hg19.chrom.sizes'
