@@ -21,6 +21,70 @@ rule prediction_allele1:
     shell:
         'python scripts/prediction.py --model {input.model} --data {input.x1} --out {output.o1} > {log.a1}'
 
+rule prediction_allele1_sbatch: # write sbatch script instead of running
+    input:
+        model=train_model('{name}.hdf5'.format(name=config['model']['name'])),
+        x1='input/{data}_allele1.hdf5'
+    output:
+        'sbatch/{name}.{{data}}.allele1.sbatch'.format(name=config['model']['name'])
+    params:
+        o1='score/{name}/{{data}}_allele1.hdf5'.format(name=config['model']['name']),
+        name='{name}.{{data}}.allele1'.format(name=config['model']['name'])
+    run:
+        sbatch = '''#!/bin/bash
+#SBATCH --job-name={name}
+#SBATCH --output={name}.out
+#SBATCH --error={name}.err
+#SBATCH --time=24:00:00
+#SBATCH --partition=gpu2
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=50G
+#SBATCH --nodes=1
+#SBATCH --gres=gpu:1
+cd /project2/xinhe/yanyul
+source setup.sh
+source activate deepvarpred_test
+module load cuda/7.5
+cd deep_variant/nick/DeepVariantPrediction
+python scripts/prediction.py --model {model} --data {x1} --out {o1}
+'''.format(name=params.name, model=input.model, x1=input.x1, o1=params.o1)
+        o = open(output[0], 'w')
+        o.write(sbatch)
+        o.close()
+
+rule prediction_allele2_sbatch: # write sbatch script instead of running
+    input:
+        model=train_model('{name}.hdf5'.format(name=config['model']['name'])),
+        x1='input/{data}_allele2.hdf5'
+    output:
+        'sbatch/{name}.{{data}}.allele2.sbatch'.format(name=config['model']['name'])
+    params:
+        o1='score/{name}/{{data}}_allele2.hdf5'.format(name=config['model']['name']),
+        name='{name}.{{data}}.allele2'.format(name=config['model']['name'])
+    run:
+        sbatch = '''#!/bin/bash
+#SBATCH --job-name={name}
+#SBATCH --output={name}.out
+#SBATCH --error={name}.err
+#SBATCH --time=24:00:00
+#SBATCH --partition=gpu2
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=50G
+#SBATCH --nodes=1
+#SBATCH --gres=gpu:1
+cd /project2/xinhe/yanyul
+source setup.sh
+source activate deepvarpred_test
+module load cuda/7.5
+cd deep_variant/nick/DeepVariantPrediction
+python scripts/prediction.py --model {model} --data {x1} --out {o1}
+'''.format(name=params.name, model=input.model, x1=input.x1, o1=params.o1)
+        o = open(output[0], 'w')
+        o.write(sbatch)
+        o.close()
+
 rule prediction_allele2:
     input:
         model=train_model('{name}.hdf5'.format(name=config['model']['name'])),
@@ -31,4 +95,3 @@ rule prediction_allele2:
         a2='logs/{name}/{data}_allele2.log'.format(name=config['model']['name'], data='{data}')
     shell:
         'python scripts/prediction.py --model {input.model} --data {input.x2} --out {output.o2} > {log.a2}'
-
