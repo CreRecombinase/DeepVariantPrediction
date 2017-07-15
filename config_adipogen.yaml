@@ -14,12 +14,12 @@ model:
 label:
   positive:
     Osteobl-DNase-None: 30
-    CD34+_Mobilized-DNase-None: 51
+    CD34plus_Mobilized-DNase-None: 51
     HUVEC-DNase-None: 61
     HPAEC-DNase-None: 98
     HUVEC-CTCF-None: 146
     HUVEC-EZH2-None: 147
-    HUVEC-Pol2(b)-None: 148
+    HUVEC-Pol2-b-None: 148
     Osteobl-CTCF-None: 170
     HUVEC-Pol2-4H8-None: 332
     HUVEC-Pol2-None: 333
