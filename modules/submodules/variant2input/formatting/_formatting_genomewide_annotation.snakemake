@@ -1,0 +1,9 @@
+rule remove_header_genomewide:
+    input:
+        lambda wildcards: config['data'][wildcards.data]['name']
+    output:
+        'data/{data}.formatted'
+    shell:
+        '''zcat {input[0]} | \
+awk -F"\\t" '{{print $1"\\t"$2"\\t"$3"\\t"NR":"$4":"$5":"NR"\\t"$1"-"$2"-"$3"\\t"$1"-"$2"-"$3}}' \
+> {output[0]}'''
