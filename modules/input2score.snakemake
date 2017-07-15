@@ -85,6 +85,17 @@ python scripts/prediction.py --model {model} --data {x1} --out {o1}
         o.write(sbatch)
         o.close()
 
+def get_sbatch(config):
+    out = []
+    for i in [1, 2]:
+        out.append('sbatch/{name}.{data}.allele{i}.sbatch',format(name=config['model']['name'],
+            data=config['data']['name'],
+            i=i))
+            
+rule score_sbatch:
+    input:
+        get_sbatch(config)
+
 rule prediction_allele2:
     input:
         model=train_model('{name}.hdf5'.format(name=config['model']['name'])),
