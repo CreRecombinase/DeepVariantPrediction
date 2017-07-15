@@ -2,6 +2,7 @@ data:
   adipogen:
     name: 'snp_list/adipogen.txt.gz'
     method: '_formatting_from_rsid.snakemake'
+    check_reference: '1'  # Set it to '1' if you want to check and reorder reference allele
     column: 1
     database: '/project2/xinhe/yanyul/databases/snp138.txt.gz'
     data_rsid_col: 5
