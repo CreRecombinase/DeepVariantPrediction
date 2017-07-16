@@ -48,6 +48,7 @@ source activate deepvarpred_test
 module load cuda/7.5
 cd deep_variant/nick/DeepVariantPrediction
 python scripts/prediction.py --model {model} --data {x1} --out {o1}
+rm {x1}
 '''.format(name=params.name, model=input.model, x1=input.x1, o1=params.o1)
         o = open(output[0], 'w')
         o.write(sbatch)
@@ -88,9 +89,10 @@ python scripts/prediction.py --model {model} --data {x1} --out {o1}
 def get_sbatch(config):
     out = []
     for i in [1, 2]:
-        out.append('sbatch/{name}.{data}.allele{i}.sbatch',format(name=config['model']['name'],
-            data=config['data']['name'],
+        out.append('sbatch/{name}.{data}.allele{i}.sbatch'.format(name=config['model']['name'],
+            data=config['data_name'],
             i=i))
+    return out
             
 rule score_sbatch:
     input:

@@ -2,7 +2,7 @@ rule filter_valid_snp:
     input:
         a1='data/{data}.formatted'
     params:
-        check_ref = config['check_reference']
+        check_ref = lambda wildcards: config['data'][wildcards.data]['check_reference']
     output:
         o1=temp('data/{data}.formatted.valid.pass'),
         o2=temp('data/{data}.formatted.valid.unpass.txt')
@@ -37,7 +37,7 @@ rule reorder_allele12:
         fasta='data/{data}.checker.ref.fasta',
         a='data/{data}.formatted.filter_by_size.pass'
     params:
-        check_ref = config['check_reference']
+        check_ref = lambda wildcards: config['data'][wildcards.data]['check_reference']
     output:
         o='data/{data}.formatted.filter_by_size.pass.reorder',
         o2=temp('data/{data}.cannot.reorder.txt')

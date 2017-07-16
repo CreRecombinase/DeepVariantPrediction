@@ -37,9 +37,9 @@ outfile = args.out
 
 print('Predicting on test sequences')
 y = model.predict(x, verbose=1)
-out1 = h5py.File(args.out + '.temp', 'w')
-out1.create_dataset('y_all', data=y)
-out1.close()
+# out1 = h5py.File(args.out + '.temp', 'w')
+# out1.create_dataset('y_all', data=y)
+# out1.close()
 ny = int(y.shape[0] / 2)
 y = (y[:ny] + y[ny:]) / 2
 out = h5py.File(outfile, 'w')
