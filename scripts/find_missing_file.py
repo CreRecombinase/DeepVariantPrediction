@@ -16,20 +16,28 @@ args = parser.parse_args()
 import glob
 import ntpath
 import re
+import os
 
-names = glob.glob(args.dir)
+names = glob.glob(args.dir + os.sep + '*')
 exists = []
+# print(names)
 for n in names:
-    print(n)    
+    # print(n)    
     n = ntpath.basename(n)
     n = re.sub(args.prefix, '', n)
     n = re.sub(args.suffix, '', n)
-    idx = int(n)
+    try:
+        if n == '':
+            continue
+        idx = int(n)
+        # print(idx)
+    except ValueError:
+        continue
     exists.append(idx)
 
-targets = [ i in for i in range(args.target_id_range_from, args.target_id_range_to + 1) ]
+targets = [ i for i in range(args.target_id_range_from, args.target_id_range_to + 1) ]
 missing = []
-for n in exists:
-    if n not in targets:
-        missing.append(n)
-print(','.join(n))
+for n in targets:
+    if n not in exists:
+        missing.append(str(n))
+print(','.join(missing))
