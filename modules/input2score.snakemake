@@ -29,7 +29,8 @@ rule prediction_allele1_sbatch: # write sbatch script instead of running
         'sbatch/{name}.{{data}}.allele1.sbatch'.format(name=config['model']['name'])
     params:
         o1='score/{name}/{{data}}_allele1.hdf5'.format(name=config['model']['name']),
-        name='{name}.{{data}}.allele1'.format(name=config['model']['name'])
+        name='{name}.{{data}}.allele1'.format(name=config['model']['name']),
+        wd = config['working_dir']
     run:
         sbatch = '''#!/bin/bash
 #SBATCH --job-name={name}
@@ -46,10 +47,10 @@ cd /project2/xinhe/yanyul
 source setup.sh
 source activate deepvarpred_test
 module load cuda/7.5
-cd deep_variant/nick/DeepVariantPrediction
+cd {working_dir}  # deep_variant/nick/DeepVariantPrediction
 python scripts/prediction.py --model {model} --data {x1} --out {o1}
 rm {x1}
-'''.format(name=params.name, model=input.model, x1=input.x1, o1=params.o1)
+'''.format(name=params.name, model=input.model, x1=input.x1, o1=params.o1, working_dir=params.wd)
         o = open(output[0], 'w')
         o.write(sbatch)
         o.close()
@@ -62,14 +63,15 @@ rule prediction_allele2_sbatch: # write sbatch script instead of running
         'sbatch/{name}.{{data}}.allele2.sbatch'.format(name=config['model']['name'])
     params:
         o1='score/{name}/{{data}}_allele2.hdf5'.format(name=config['model']['name']),
-        name='{name}.{{data}}.allele2'.format(name=config['model']['name'])
+        name='{name}.{{data}}.allele2'.format(name=config['model']['name']),
+        wd = config['working_dir']
     run:
         sbatch = '''#!/bin/bash
 #SBATCH --job-name={name}
 #SBATCH --output={name}.out
 #SBATCH --error={name}.err
 #SBATCH --time=24:00:00
-#SBATCH --partition=gpu
+#SBATCH --partition=gpu2
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=50G
@@ -79,9 +81,9 @@ cd /project2/xinhe/yanyul
 source setup.sh
 source activate deepvarpred_test
 module load cuda/7.5
-cd deep_variant/nick/DeepVariantPrediction
+cd {working_dir}  # deep_variant/nick/DeepVariantPrediction
 python scripts/prediction.py --model {model} --data {x1} --out {o1}
-'''.format(name=params.name, model=input.model, x1=input.x1, o1=params.o1)
+'''.format(name=params.name, model=input.model, x1=input.x1, o1=params.o1, working_dir=params.wd)
         o = open(output[0], 'w')
         o.write(sbatch)
         o.close()
